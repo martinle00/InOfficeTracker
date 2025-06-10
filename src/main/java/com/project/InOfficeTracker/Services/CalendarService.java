@@ -45,6 +45,10 @@ public class CalendarService {
     public void SaveMonthData(UpdateInOfficeDaysRequest updateInOfficeDaysRequest) {
         List<CalendarData> dataList = calendarRepository.getCalendarDataByUserId(UUID.fromString(updateInOfficeDaysRequest.userId));
         dataList.get(0).setInOfficeDays(updateInOfficeDaysRequest.updatedOfficeDays);
-        calendarRepository.save(dataList.get(0));
+        try {
+            calendarRepository.save(dataList.get(0));
+        } catch (Exception e) {
+            logger.error("Error occurred while saving month data: {}", e.getMessage());
+        }
     }
 }
