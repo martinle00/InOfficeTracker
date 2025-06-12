@@ -22,5 +22,5 @@ public class CalendarData {
     @Column(name = "user_id")
     private UUID userId;
     @Column(name = "in_office_days", columnDefinition = "text[]")
-    private List<String> inOfficeDays;
+    private List<Integer> inOfficeDays;
 }

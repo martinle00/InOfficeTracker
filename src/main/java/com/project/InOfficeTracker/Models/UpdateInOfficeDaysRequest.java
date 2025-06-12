@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 
 public class UpdateInOfficeDaysRequest {
-    public List<String> updatedOfficeDays;
+    public List<Integer> updatedOfficeDays;
     public String userId;
     public Month month;
 }

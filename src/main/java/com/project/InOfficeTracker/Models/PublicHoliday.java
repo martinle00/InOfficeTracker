@@ -1,8 +1,13 @@
 package com.project.InOfficeTracker.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public class PublicHoliday {
-    private ArrayList<Date> Dates;
+    private Date Date;
     private String Name;
 }
