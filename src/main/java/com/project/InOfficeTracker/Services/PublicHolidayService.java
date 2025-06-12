@@ -34,22 +34,22 @@ public class PublicHolidayService {
     public Mono<List<Map<String, Object>>> GetPublicHoliday(Month month) {
         Mono<Map<String, Object>> res = GetPublicHolidayResults();
 
-Mono<List<Map<String, Object>>> nationalAndNswHolidays = res
-    .map(response -> {
-        Map<String, Object> responseMap = (Map<String, Object>) response.get("response");
-        List<Map<String, Object>> holidays = (List<Map<String, Object>>) responseMap.get("holidays");
-        return holidays.stream()
-            .filter(holiday -> {
-                List<?> typeList = (List<?>) holiday.get("type");
-                boolean isNational = typeList.contains("National holiday");
-                boolean isCommonState = typeList.contains("Common local holiday");
-                Object statesObj = holiday.get("states");
-                boolean hasNsw = statesObj instanceof List && ((List<?>) statesObj).stream()
-                        .anyMatch(stateObj -> stateObj instanceof Map && "NSW".equals(((Map<?, ?>) stateObj).get("abbrev")));
-                return isNational || (isCommonState && hasNsw);
-            })
-            .collect(Collectors.toList());
-    });
+        Mono<List<Map<String, Object>>> nationalAndNswHolidays = res
+            .map(response -> {
+                Map<String, Object> responseMap = (Map<String, Object>) response.get("response");
+                List<Map<String, Object>> holidays = (List<Map<String, Object>>) responseMap.get("holidays");
+                return holidays.stream()
+                    .filter(holiday -> {
+                        List<?> typeList = (List<?>) holiday.get("type");
+                        boolean isNational = typeList.contains("National holiday");
+                        boolean isCommonState = typeList.contains("Common local holiday");
+                        Object statesObj = holiday.get("states");
+                        boolean hasNsw = statesObj instanceof List && ((List<?>) statesObj).stream()
+                                .anyMatch(stateObj -> stateObj instanceof Map && "NSW".equals(((Map<?, ?>) stateObj).get("abbrev")));
+                        return isNational || (isCommonState && hasNsw);
+                    })
+                    .collect(Collectors.toList());
+            });
 
         Mono<List<Map<String, Object>>> filterbyMonth = nationalAndNswHolidays
                 .map(response -> response.stream()
