@@ -13,6 +13,7 @@ import java.util.UUID;
 
 public class UpdateInOfficeDaysRequest {
     public List<Integer> updatedOfficeDays;
-    public String userId;
+    public List<Integer> updatedAtHomeDays;
+    public List<Integer> updatedAbsentDays;
     public Month month;
 }

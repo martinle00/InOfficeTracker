@@ -1,26 +1,21 @@
 package com.project.InOfficeTracker.Models;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 import java.util.Date;
-import java.util.UUID;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.Document;
+
 @Getter
 @Setter
+@Document(collection = "Calendar")
 public class CalendarData {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    private Date created_at;
-    private Date last_updated;
-    private String year;
-    private String month;
-    @Column(name = "user_id")
-    private UUID userId;
-    @Column(name = "in_office_days", columnDefinition = "text[]")
-    private List<Integer> inOfficeDays;
+    public String year;
+    public String month;
+    public Date last_updated;
+    public List<Integer> inOfficeDays;
+    public List<Integer> atHomeDays;
+    public List<Integer> absentDays;
 }
