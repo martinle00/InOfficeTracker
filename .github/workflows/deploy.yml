@@ -1,0 +1,38 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Deploys on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Optional: Build step (for Java Spring Boot)
+      - name: Build with Maven
+        run: mvn clean package --file pom.xml
+
+      - name: Copy artifact to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: target/*.jar  # Adjust path for your build
+          target: ${{ secrets.DEPLOY_DIR }}
+
+      - name: SSH into EC2 and restart app
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_DIR }}
+            # Example for systemd-based Spring Boot app
+            sudo systemctl restart myapp.service
