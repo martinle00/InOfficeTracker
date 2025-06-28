@@ -30,7 +30,6 @@ public class CalendarService {
 
     public ArrayList<Weekday> GetCalendarMonthWeekdays(Month month) {
         ArrayList<Weekday> days = new ArrayList<>();
-        List<CalendarData> dbRes = calendarRepository.getCalendarDataByMonth(Integer.toString(month.getValue()));
         int year = Year.now().getValue();
         YearMonth yearMonth = YearMonth.of(year, month.getValue());
         for (int day = 1; day <= yearMonth.lengthOfMonth(); day++) {
