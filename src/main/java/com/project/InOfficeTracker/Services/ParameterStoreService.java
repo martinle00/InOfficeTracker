@@ -1,5 +1,8 @@
 package com.project.InOfficeTracker.Services;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
@@ -8,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ParameterStoreService {
+
+    Logger logger = LoggerFactory.getLogger(CalendarService.class);
 
     private final SsmClient ssmClient;
 
@@ -24,7 +29,7 @@ public class ParameterStoreService {
                 .build();
 
         GetParameterResponse response = ssmClient.getParameter(request);
-        System.out.println(response.parameter().value());
+        logger.info("Retrieved parameter: {}", response.parameter().value());
         return response.parameter().value();
     }
 }
