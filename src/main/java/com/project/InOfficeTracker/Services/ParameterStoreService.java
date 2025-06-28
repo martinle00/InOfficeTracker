@@ -13,7 +13,7 @@ public class ParameterStoreService {
 
     public ParameterStoreService() {
         this.ssmClient = SsmClient.builder()
-                .region(Region.US_EAST_1)
+                .region(Region.AP_SOUTHEAST_2)
                 .build();
     }
 
