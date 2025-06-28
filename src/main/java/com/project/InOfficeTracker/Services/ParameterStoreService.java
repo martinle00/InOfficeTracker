@@ -24,6 +24,7 @@ public class ParameterStoreService {
                 .build();
 
         GetParameterResponse response = ssmClient.getParameter(request);
+        System.out.println(response.parameter().value());
         return response.parameter().value();
     }
 }
