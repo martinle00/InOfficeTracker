@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           source: target/*.jar  # Adjust path for your build
-          target: ${{ secrets.DEPLOY_DIR }}
+          #target: ${{ secrets.DEPLOY_DIR }}
 
       - name: SSH into EC2 and restart app
         uses: appleboy/ssh-action@v1.0.0
