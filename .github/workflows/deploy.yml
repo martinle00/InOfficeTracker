@@ -36,4 +36,4 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd ${{ secrets.DEPLOY_DIR }}
-            sudo systemctl restart myapp.service
+            sudo systemctl restart inOfficeTracker
