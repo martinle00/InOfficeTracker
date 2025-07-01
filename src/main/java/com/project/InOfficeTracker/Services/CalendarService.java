@@ -45,7 +45,7 @@ public class CalendarService {
         return days;
     }
 
-    public void SaveMonthData(UpdateInOfficeDaysRequest updateInOfficeDaysRequest) {
+    public void UpsertMonthData(UpdateInOfficeDaysRequest updateInOfficeDaysRequest) {
         Criteria criteria = new Criteria().andOperator(
                 Criteria.where("month").is(Integer.toString(updateInOfficeDaysRequest.getMonth().getValue())),
                 Criteria.where("year").is(Integer.toString(Year.now().getValue())));
@@ -55,6 +55,6 @@ public class CalendarService {
                 .set("atHomeDays", updateInOfficeDaysRequest.getUpdatedAtHomeDays())
                 .set("absentDays", updateInOfficeDaysRequest.getUpdatedAbsentDays())
                 .set("last_updated", new Date());
-        mongoTemplate.findAndModify(query, update, CalendarData.class);
+        mongoTemplate.findAndModify(query, update, org.springframework.data.mongodb.core.FindAndModifyOptions.options().upsert(true), CalendarData.class);
     }
 }

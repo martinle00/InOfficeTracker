@@ -25,6 +25,6 @@ public class CalendarController {
 
     @PostMapping("/month/save")
     public void SaveMonthData(@RequestBody UpdateInOfficeDaysRequest updateInOfficeDaysRequest) {
-        calendarService.SaveMonthData(updateInOfficeDaysRequest);
+        calendarService.UpsertMonthData(updateInOfficeDaysRequest);
     }
 }
