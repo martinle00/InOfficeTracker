@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri : mongodb+srv://martin:${MONGODB_PASSWORD}@cluster0.8u5vj2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      uri : mongodb+srv://martin:${mongodb.password}@cluster0.8u5vj2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database : InOfficeTracker
   cloud:
     aws:
