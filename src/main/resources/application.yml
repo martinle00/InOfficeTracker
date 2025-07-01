@@ -1,11 +1,11 @@
 spring:
-  data:
-    mongodb:
-      uri : mongodb+srv://martin:${ssm:/MONGODB_PASSWORD}@cluster0.8u5vj2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database : InOfficeTracker
+  config:
+    import: "aws-parameterstore:/"
   cloud:
     aws:
-      parameterstore:
-        enabled: true
       region:
         static: ap-southeast-2
+  data:
+    mongodb:
+      uri: mongodb+srv://martin:${MONGODB_PASSWORD}@cluster0.8u5vj2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: InOfficeTracker
