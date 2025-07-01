@@ -1,6 +1,7 @@
 package com.project.InOfficeTracker.Controllers;
 
 import com.project.InOfficeTracker.Models.Month;
+import com.project.InOfficeTracker.Models.MonthData;
 import com.project.InOfficeTracker.Models.UpdateInOfficeDaysRequest;
 import com.project.InOfficeTracker.Models.Weekday;
 import com.project.InOfficeTracker.Services.CalendarService;
@@ -19,7 +20,7 @@ public class CalendarController {
     }
 
     @GetMapping("/calendar")
-    public ArrayList<Weekday> GetCalendarMonth(@RequestParam Month month) {
+    public MonthData GetCalendarMonth(@RequestParam Month month) {
         return calendarService.GetCalendarMonthWeekdays(month);
     }
 

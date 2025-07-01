@@ -1,9 +1,7 @@
 package com.project.InOfficeTracker.Services;
 
-import com.project.InOfficeTracker.Models.CalendarData;
+import com.project.InOfficeTracker.Models.*;
 import com.project.InOfficeTracker.Models.Month;
-import com.project.InOfficeTracker.Models.UpdateInOfficeDaysRequest;
-import com.project.InOfficeTracker.Models.Weekday;
 import com.project.InOfficeTracker.Repositories.CalendarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.Date;
 
 @Service
 public class CalendarService {
@@ -24,11 +23,15 @@ public class CalendarService {
     private CalendarRepository calendarRepository;
 
     @Autowired
+    private PublicHolidayService publicHolidayService;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     Logger logger = LoggerFactory.getLogger(CalendarService.class);
 
-    public ArrayList<Weekday> GetCalendarMonthWeekdays(Month month) {
+    public MonthData GetCalendarMonthWeekdays(Month month) {
+        MonthData monthData = new MonthData();
         ArrayList<Weekday> days = new ArrayList<>();
         int year = Year.now().getValue();
         YearMonth yearMonth = YearMonth.of(year, month.getValue());
@@ -42,7 +45,12 @@ public class CalendarService {
                 days.add(weekday);
             }
         }
-        return days;
+        monthData.OfficeDays = days;
+        List<PublicHoliday> publicHolidaysList = publicHolidayService.GetPublicHolidayByMonth(month).block();
+        monthData.PublicHolidays = publicHolidaysList.isEmpty() ? null : publicHolidayService.GetPublicHolidayByMonth(month).block();
+        int workingDays = days.size();
+        monthData.RequiredInOfficeDays = (int) Math.ceil(workingDays/2.0) - publicHolidaysList.size();
+        return monthData;
     }
 
     public void UpsertMonthData(UpdateInOfficeDaysRequest updateInOfficeDaysRequest) {
