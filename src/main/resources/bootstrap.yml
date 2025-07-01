@@ -3,3 +3,6 @@ spring:
     aws:
       parameterstore:
         enabled: true
+
+mongodb:
+  password: ${ssm:MONGODB_PASSWORD}
