@@ -1,5 +1,3 @@
-import React from 'react';
-
 function StatsTable({ totalNonWorking, totalOffice, totalWFH, inOfficeDays, actualConnectionPercent, connectionColor, totalWorkingDays }) {
   return (
     <table className="stats-table">

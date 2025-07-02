@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import StatsTable from './StatsTable';
 import CalendarHeader from './CalendarHeader';
 import CalendarCell from './CalendarCell';
 
-const initialDays = [
-  ['','','','',''],
-  ['','','','',''],
-  ['','','','',''],
-  ['','','','',''],
-  ['','','','','']
-];
-
-
 function Calendar() {
-  const [days, setDays] = useState(initialDays);
   const [changed, setChanged] = useState(false);
   const [data, setData] = useState(null);
   const [cellColors, setCellColors] = useState(
