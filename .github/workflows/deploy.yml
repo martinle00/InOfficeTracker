@@ -59,7 +59,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: frontend/build/**/*
+          source: frontend/in-office-tracker/**/*
           target: ${{ secrets.FRONTEND_DEPLOY_DIR }}
 
       - name: Reload Nginx
