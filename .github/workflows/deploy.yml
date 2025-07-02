@@ -37,4 +37,5 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_DIR }}
             sudo systemctl daemon-reload
-            sudo systemctl restart inOfficeTracker
+            sudo systemctl restart in-office-tracker
+            sudo systemctl status in-office-tracker --no-pager
