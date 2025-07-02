@@ -3,12 +3,11 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # Deploys on push to main branch
+      - main
 
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,7 +19,7 @@ jobs:
       - name: List build artifacts
         run: ls -al backend/target/
 
-      - name: Copy artifact to EC2
+      - name: Copy backend jar to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -29,7 +28,7 @@ jobs:
           source: backend/target/*.jar
           target: ${{ secrets.DEPLOY_DIR }}
 
-      - name: SSH into EC2 and restart app
+      - name: Restart backend service
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -40,9 +39,10 @@ jobs:
             sudo systemctl daemon-reload
             sudo systemctl restart in-office-tracker
             sudo systemctl status in-office-tracker --no-pager
+
   deploy-frontend:
     runs-on: ubuntu-latest
-
+    needs: deploy-backend   # ✅ Wait for backend to finish
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,14 +59,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: frontend/build/*
+          source: frontend/build/**/*
           target: ${{ secrets.FRONTEND_DEPLOY_DIR }}
 
-      - name: Restart Nginx (or your web server)
+      - name: Reload Nginx
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo systemctl reload nginx
+            sudo nginx -t && sudo systemctl reload nginx
