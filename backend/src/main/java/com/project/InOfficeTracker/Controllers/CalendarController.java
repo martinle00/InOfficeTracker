@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CalendarController {
     private final CalendarService calendarService;
