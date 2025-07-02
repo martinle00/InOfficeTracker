@@ -1,0 +1,191 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.calendar-container {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.calendar-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.calendar-table th, .calendar-table td {
+  border: 1px solid #ccc;
+  width: 20%;        /* 5 columns, so 100%/5 = 20% */
+  height: 60px;      /* or any fixed height you prefer */
+  min-width: 60px;   /* optional: ensures a minimum width */
+  max-width: 120px;  /* optional: ensures a maximum width */
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.inofficeday {
+  background: #d9ead3;
+}
+
+.wfhday {
+  background: #fff2cc;
+}
+
+.offdayalsickday {
+  background: #b7b7b7;
+  color: #fff;
+}
+
+.stats-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 350px;
+}
+
+.stats-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+}
+
+.highlight-green {
+  background: #93c47d;
+  color: #fff;
+  font-weight: bold;
+}
+
+.calendar-grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto; /* Center horizontally */
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 16px auto;
+}
+
+.calendar-header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.calendar-arrow {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 16px;
+}
+
+.save-button {
+  margin-top: 32px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #ccc;
+  color: #fff;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: background 0.2s;
+}
+
+.save-button.changed {
+  background: #4caf50;
+  cursor: pointer;
+}
+
+/* Make the calendar container responsive */
+.calendar-container,
+.calendar-grid-container {
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+/* Make the table scrollable on small screens */
+.calendar-table {
+  width: 100%;
+  min-width: 500px;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Responsive stats table */
+.stats-table {
+  width: 100%;
+  min-width: 250px;
+  max-width: 350px;
+}
+
+/* Responsive header */
+.calendar-header {
+  max-width: 100%;
+  padding: 0 8px;
+}
+
+/* Responsive button */
+.save-button {
+  width: 100%;
+  max-width: 350px;
+  box-sizing: border-box;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 600px) {
+  .calendar-table,
+  .stats-table {
+    font-size: 12px;
+    min-width: unset;
+  }
+  .calendar-header-title {
+    font-size: 1.1rem;
+  }
+  .calendar-header {
+    font-size: 1rem;
+    padding: 0 2px;
+  }
+  .save-button {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+
+.calendar-cell.grey {
+  background: #b7b7b7;
+  color: #fff;
+}
+.calendar-cell.green {
+  background: #93c47d;
+  color: #fff;
+}
+.calendar-cell.yellow {
+  background: #fff2cc;
+  color: #333;
+}
+
+.calendar-cell.empty {
+  background: #fff !important;
+  cursor: default !important;
+}
+
+.highlight-red {
+  background: #e06666;
+  color: #fff;
+  font-weight: bold;
+}
