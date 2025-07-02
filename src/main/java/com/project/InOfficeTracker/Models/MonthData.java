@@ -11,4 +11,7 @@ public class MonthData {
     public int RequiredInOfficeDays;
     @Nullable
     public List<PublicHoliday> PublicHolidays;
+    public List<Integer> userOfficeDays;
+    public List<Integer> userAtHomeDays;
+    public List<Integer> userAbsentDays;
 }
