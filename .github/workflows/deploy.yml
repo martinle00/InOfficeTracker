@@ -46,6 +46,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Debug secret value
+        run: echo "FRONTEND_DEPLOY_DIR is ${{ secrets.FRONTEND_DEPLOY_DIR }}"
 
       - name: Build React frontend
         working-directory: ./frontend/in-office-tracker
@@ -53,13 +56,23 @@ jobs:
           npm install
           npm run build
 
+      - name: Ensure frontend deploy directory exists
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            sudo mkdir -p ${{ secrets.FRONTEND_DEPLOY_DIR }}
+            sudo chown -R $USER:$USER ${{ secrets.FRONTEND_DEPLOY_DIR }}
+
       - name: Copy frontend build to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: frontend/build/
+          source: frontend/in-office-tracker/build
           target: ${{ secrets.FRONTEND_DEPLOY_DIR }}
 
       - name: Reload Nginx
