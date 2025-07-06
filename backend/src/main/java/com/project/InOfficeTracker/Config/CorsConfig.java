@@ -14,11 +14,11 @@ public class CorsConfig {
     @Autowired
     ParameterStoreService parameterStoreService;
 
-    String localhostUrl = parameterStoreService.getSecret("LocalHostURL");
-    String prodUrl = parameterStoreService.getSecret("ProdURL");
-
     @Bean
     public CorsFilter corsFilter() {
+
+        String localhostUrl = parameterStoreService.getSecret("LocalHostURL");
+        String prodUrl = parameterStoreService.getSecret("ProdURL");
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin(localhostUrl);
         config.addAllowedOrigin(prodUrl);
