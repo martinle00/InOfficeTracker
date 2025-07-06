@@ -11,8 +11,14 @@ function Calendar() {
 );
 
   const weekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+  const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
 
-const [calendarGrid, setCalendarGrid] = useState(Array.from({ length: 5 }, () => Array(5).fill(null)));
+  const [calendarGrid, setCalendarGrid] = useState(Array.from({ length: 5 }, () => Array(5).fill(null)));
+
+  const now = new Date();
+  const [currentMonth, setCurrentMonth] = useState(now.getMonth());
+  const [currentYear, setCurrentYear] = useState(now.getFullYear());
+  const lowerCaseMonth = months[currentMonth].charAt(0) + months[currentMonth].slice(1).toLowerCase();
 
 // After fetching data and getting OfficeDays
 const buildCalendarGrid = (officeDays) => {
@@ -77,7 +83,7 @@ const handleSave = () => {
     updatedOfficeDays: userOfficeDays,
     updatedAtHomeDays: userAtHomeDays,
     updatedAbsentDays: userAbsentDays,
-    month: 'JULY'
+    month: months[currentMonth].toUpperCase()
   }),
 })
   .then(response => response.json())
@@ -93,7 +99,8 @@ const handleSave = () => {
 };
 
 useEffect(() => {
-  fetch('http://52.62.144.239:8080/calendar?month=JULY')
+  const monthName = months[currentMonth].toUpperCase();
+  fetch(`http://52.62.144.239:8080/calendar?month=${monthName}`)
     .then(response => response.json())
     .then(json => {
       setData(json);
@@ -124,22 +131,41 @@ useEffect(() => {
       }
     })
     .catch(error => console.error('Error fetching data:', error));
-}, []);
+}, [currentMonth, currentYear]);
 
   // Count colors only for cells with a date
-let totalGrey = 0, totalGreen = 0, totalYellow = 0;
+let totalGrey = 0, totalGreen = 0, totalYellow = 0, totalWorkingDays = 0;
 for (let i = 0; i < 5; i++) {
   for (let j = 0; j < 5; j++) {
     if (calendarGrid[i][j]?.date) {
       if (cellColors[i][j] === 'grey') totalGrey++;
       if (cellColors[i][j] === 'green') totalGreen++;
       if (cellColors[i][j] === 'yellow') totalYellow++;
+      if (cellColors[i][j] !== 'grey') totalWorkingDays++;
     }
   }
 }
 
-//const totalWorkingDays = data ? data.RequiredInOfficeDays : 0;
-const totalWorkingDays = data ? data.OfficeDays.length: 0;
+  const handlePrevMonth = () => {
+    setCurrentMonth(prev => {
+      if (prev === 0) {
+        setCurrentYear(y => y - 1);
+        return 11;
+      }
+      return prev - 1;
+    });
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(prev => {
+      if (prev === 11) {
+        setCurrentYear(y => y + 1);
+        return 0;
+      }
+      return prev + 1;
+    });
+  };
+
 const actualConnection = totalWorkingDays > 0 ? totalGreen / totalWorkingDays : 0;
 const actualConnectionPercent = (actualConnection * 100).toFixed(0);
 const connectionColor = actualConnection >= 0.5 ? 'highlight-green' : 'highlight-red';
@@ -147,7 +173,12 @@ const connectionColor = actualConnection >= 0.5 ? 'highlight-green' : 'highlight
   return (
     <div className="calendar-grid-container">
       <div>
-        <CalendarHeader month="July" year={2025} />
+        <CalendarHeader 
+          month={lowerCaseMonth} 
+          year={currentYear} 
+          onPrev={handlePrevMonth}
+          onNext={handleNextMonth}
+        />
         <table className="calendar-table">
           <thead>
             <tr>
