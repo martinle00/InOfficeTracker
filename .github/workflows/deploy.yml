@@ -46,6 +46,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Debug secret value
+        run: echo "FRONTEND_DEPLOY_DIR is ${{ secrets.FRONTEND_DEPLOY_DIR }}"
 
       - name: Build React frontend
         working-directory: ./frontend/in-office-tracker
