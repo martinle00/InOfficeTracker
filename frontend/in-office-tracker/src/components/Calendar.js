@@ -153,6 +153,7 @@ for (let i = 0; i < 5; i++) {
         setCurrentYear(y => y - 1);
         return 11;
       }
+      console.log('Left arrow pressed, current month:', prev);
       return prev - 1;
     });
   };
@@ -163,6 +164,7 @@ for (let i = 0; i < 5; i++) {
         setCurrentYear(y => y + 1);
         return 0;
       }
+      console.log('Right arrow pressed, current month:', prev);
       return prev + 1;
     });
   };
