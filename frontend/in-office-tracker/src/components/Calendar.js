@@ -3,6 +3,8 @@ import StatsTable from './StatsTable';
 import CalendarHeader from './CalendarHeader';
 import CalendarCell from './CalendarCell';
 
+const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+
 function Calendar() {
   const [changed, setChanged] = useState(false);
   const [data, setData] = useState(null);
@@ -11,7 +13,6 @@ function Calendar() {
 );
 
   const weekDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
-  const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
 
   const [calendarGrid, setCalendarGrid] = useState(Array.from({ length: 5 }, () => Array(5).fill(null)));
 
