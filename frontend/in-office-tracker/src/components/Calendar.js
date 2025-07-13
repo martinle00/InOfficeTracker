@@ -73,7 +73,7 @@ const handleSave = () => {
   console.log('userAtHomeDays:', userAtHomeDays);
   console.log('userAbsentDays:', userAbsentDays);
 
-  fetch('http://52.62.144.239:8080/month/save', {
+  fetch('http://13.237.45.216:8080/month/save', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const handleSave = () => {
 
 useEffect(() => {
   const monthName = months[currentMonth].toUpperCase();
-  fetch(`http://52.62.144.239:8080/calendar?month=${monthName}`)
+  fetch(`http://13.237.45.216:8080/calendar?month=${monthName}`)
     .then(response => response.json())
     .then(json => {
       setData(json);
